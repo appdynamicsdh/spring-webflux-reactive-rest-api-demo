@@ -111,6 +111,13 @@ public class TweetController {
         return tweetRepository.save(tweet);
     }
 
+
+    @GetMapping("/304")
+    public ResponseEntity testme() {
+        return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    }
+
+
     @GetMapping("/tweets/{id}")
     public Mono<ResponseEntity<Tweet>> getTweetById(@PathVariable(value = "id") String tweetId) {
         return tweetRepository.findById(tweetId)
