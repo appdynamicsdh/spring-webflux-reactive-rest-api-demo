@@ -22,6 +22,7 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -83,6 +84,25 @@ public class TweetController {
         return                client2.get()
                 .retrieve()
                 .bodyToMono(String.class);
+    }
+
+    @GetMapping("/testError")
+    public Mono<String> testError(){
+        //love you...
+        long time = System.currentTimeMillis();
+        WebClient client2 = WebClient.create("http://www.google.com");
+
+        //WebClient client2 = WebClient.create("http://localhost:8090/tweets");
+
+
+
+
+
+
+        return client2.get()
+                .retrieve()
+                .bodyToMono(Map.class).flatMap(resp -> Mono.error(new Exception("test")));
+
     }
 
     @GetMapping("/tweets")
@@ -153,6 +173,7 @@ public class TweetController {
     public Flux<Tweet> streamAllTweets() {
         return tweetRepository.findAll();
     }
+
 
 
 
