@@ -86,7 +86,7 @@ public class TweetController {
                 .bodyToMono(String.class);
     }
 
-    @GetMapping("/testError")
+    @GetMapping(path = "/testError",produces = "application/json")
     public Mono<String> testError(){
         //love you...
         long time = System.currentTimeMillis();
@@ -106,7 +106,7 @@ public class TweetController {
     }
 
 
-    @GetMapping("/testError2")
+    @GetMapping(path = "/testError2",produces = "application/json")
     public Mono<String> testError2(){
         //love you...
         long time = System.currentTimeMillis();
