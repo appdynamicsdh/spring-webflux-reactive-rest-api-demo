@@ -90,16 +90,13 @@ public class TweetController {
     public Mono<String> testError(){
         //love you...
         long time = System.currentTimeMillis();
-        WebClient client2 = WebClient.create("http://www.google.com");
+       // WebClient client2 = WebClient.create("http://www.google.com");
 
-        //WebClient client2 = WebClient.create("http://localhost:8090/tweets");
-
-
+        WebClient client2 = WebClient.create("http://localhost:8080/tweets");
 
 
 
-
-        return client2.get()
+        return client2.get().accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Map.class).flatMap(resp -> Mono.error(new Exception("test")));
 
@@ -110,13 +107,13 @@ public class TweetController {
     public Mono<String> testError2(){
         //love you...
         long time = System.currentTimeMillis();
-        WebClient client2 = WebClient.create("http://www.google.com");
+        //WebClient client2 = WebClient.create("http://www.google.com");
 
-        //WebClient client2 = WebClient.create("http://localhost:8090/tweets");
+        WebClient client2 = WebClient.create("http://localhost:8080/tweets");
 
 
 
-        return client2.get().retrieve()
+        return client2.get().accept(MediaType.APPLICATION_JSON).retrieve()
                 .onStatus(HttpStatus::is2xxSuccessful, clientResponse -> {
                     return clientResponse.bodyToMono(Map.class).flatMap(resp ->
                     {
