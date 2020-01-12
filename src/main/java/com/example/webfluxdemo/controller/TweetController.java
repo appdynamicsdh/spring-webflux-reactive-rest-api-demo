@@ -105,6 +105,26 @@ public class TweetController {
 
     }
 
+
+    @GetMapping("/testError2")
+    public Mono<String> testError2(){
+        //love you...
+        long time = System.currentTimeMillis();
+        WebClient client2 = WebClient.create("http://www.google.com");
+
+        //WebClient client2 = WebClient.create("http://localhost:8090/tweets");
+
+
+
+        return client2.get().retrieve()
+                .onStatus(HttpStatus::is2xxSuccessful, clientResponse -> {
+                    return clientResponse.bodyToMono(Map.class).flatMap(resp ->
+                    {
+                        return Mono.error(new Exception("test"));
+
+                    });}).bodyToMono(String.class);
+
+    }
     @GetMapping("/tweets")
     public Flux<Tweet> getAllTweets() {
 
