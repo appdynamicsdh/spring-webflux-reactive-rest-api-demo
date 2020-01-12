@@ -103,7 +103,7 @@ public class TweetController {
     }
 
 
-    @GetMapping(path = "/testError2",produces = "application/json")
+    @GetMapping(path = "/testError2")
     public Mono<String> testError2(){
         //love you...
         long time = System.currentTimeMillis();
@@ -113,9 +113,9 @@ public class TweetController {
 
 
 
-        return client2.get().accept(MediaType.APPLICATION_JSON).retrieve()
+        return client2.get().retrieve()
                 .onStatus(HttpStatus::is2xxSuccessful, clientResponse -> {
-                    return clientResponse.bodyToMono(Map.class).flatMap(resp ->
+                    return clientResponse.bodyToMono(String.class).flatMap(resp ->
                     {
                         return Mono.error(new Exception("test"));
 
